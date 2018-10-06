@@ -8,13 +8,35 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-
+class ViewController: UIViewController, UIScrollViewDelegate {
+    
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var imageView: UIImageView!
+    let imageName = "colorful-bird-246020.jpg"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        layoutSetup()
     }
 
+    func layoutSetup() {
+        imageView.image = UIImage(named: imageName)
+        guard let imageSize = imageView.image?.size else {return}
+//        imageView.widthAnchor.constraint(equalToConstant: imageSize.width)
+//        imageView.heightAnchor.constraint(equalToConstant: imageSize.height)
+        scrollView.contentSize = imageSize
+        
+        scrollView.delegate = self
+        scrollView.minimumZoomScale = 0.1
+        scrollView.maximumZoomScale = 4
+        scrollView.zoomScale = 1
+        
+    }
+    
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return imageView
+    }
 
 }
 
